@@ -1,4 +1,38 @@
 'use strict'; //厳格モード
+const userNameInput = document.getElementById('user-name');
+const assessmentButton = document.getElementById('assessment');
+const resultDivided = document.getElementById('result-area');
+const tweetDivided = document.getElementById('tweet-area');
+
+/**
+ * 指定した要素の子供をすべて削除
+ * @param {HTMLElement} element HTMLの要素
+ */
+function removeAllChildren(element) {
+  while (element.firstChild) { //子要素があれば削除
+    element.removeChild(element.firstChild);
+  }
+}
+
+assessmentButton.onclick = () => {
+  const userName = userNameInput.value;
+  if (userName.length === 0) {
+    return;
+  }
+  removeAllChildren(resultDivided);
+  const header = document.createElement('h3');
+  header.innerText = '診断結果';
+  resultDivided.appendChild(header);
+
+  const paragraph = document.createElement('p');
+  const result = assessment(userName);
+  paragraph.innerText = result;
+  resultDivided.appendChild(paragraph);
+
+  //ツイートエリア
+  removeAllChildren(tweetDivided);
+}
+
 const answers = [
   '{userName}のいいところは声です。{userName}の特徴的な声は皆を惹きつけ、心に残ります。',
   '{userName}のいいところはまなざしです。{userName}に見つめられた人は、気になって仕方がないでしょう。',
